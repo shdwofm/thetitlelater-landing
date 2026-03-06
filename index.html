@@ -1,0 +1,1473 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>THE TITLE LATER — DIY Production Agency</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Black+Han+Sans&family=Barlow+Condensed:wght@400;600;700;900&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #1a0a06;
+    --bg2: #230d08;
+    --red: #e84420;
+    --red-dim: #c93818;
+    --red-bright: #ff5533;
+    --cream: #f0e8d8;
+    --text-muted: #a05030;
+    --border: #e84420;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--cream);
+    font-family: 'Barlow', sans-serif;
+    overflow-x: hidden;
+    cursor: default;
+  }
+
+  /* NOISE TEXTURE OVERLAY */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.4;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 48px;
+    background: linear-gradient(to bottom, rgba(26,10,6,0.97) 0%, transparent 100%);
+  }
+
+  .nav-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.6rem;
+    letter-spacing: 0.12em;
+    color: var(--red);
+    text-decoration: none;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 36px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 600;
+    font-size: 0.85rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--cream);
+    text-decoration: none;
+    opacity: 0.7;
+    transition: opacity 0.2s, color 0.2s;
+  }
+
+  .nav-links a:hover { opacity: 1; color: var(--red); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    padding: 120px 48px 80px;
+    text-align: center;
+    overflow: hidden;
+  }
+
+  .hero-bg-lines {
+    position: absolute;
+    inset: 0;
+    background: 
+      repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 59px,
+        rgba(232,68,32,0.04) 60px
+      );
+    pointer-events: none;
+  }
+
+  .hero-eyebrow {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 600;
+    font-size: 0.8rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 24px;
+    animation: fadeUp 0.8s ease both;
+  }
+
+  .hero-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(5rem, 18vw, 14rem);
+    line-height: 0.88;
+    letter-spacing: 0.02em;
+    color: var(--red);
+    text-shadow: 
+      4px 4px 0 rgba(0,0,0,0.4),
+      0 0 80px rgba(232,68,32,0.15);
+    animation: fadeUp 0.8s 0.1s ease both;
+    position: relative;
+  }
+
+  .hero-title span {
+    display: block;
+    color: var(--cream);
+  }
+
+  .hero-subtitle {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 400;
+    font-size: clamp(1rem, 2.5vw, 1.4rem);
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+    margin-top: 28px;
+    max-width: 520px;
+    line-height: 1.6;
+    animation: fadeUp 0.8s 0.2s ease both;
+  }
+
+  .hero-cta {
+    display: flex;
+    gap: 16px;
+    margin-top: 48px;
+    flex-wrap: wrap;
+    justify-content: center;
+    animation: fadeUp 0.8s 0.3s ease both;
+  }
+
+  .btn-primary {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--bg);
+    background: var(--red);
+    border: 2px solid var(--red);
+    padding: 14px 36px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: inline-block;
+  }
+
+  .btn-primary:hover {
+    background: var(--red-bright);
+    border-color: var(--red-bright);
+    transform: translate(-2px, -2px);
+    box-shadow: 4px 4px 0 var(--red-dim);
+  }
+
+  .btn-secondary {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--red);
+    background: transparent;
+    border: 2px solid var(--red);
+    padding: 14px 36px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: inline-block;
+  }
+
+  .btn-secondary:hover {
+    background: rgba(232,68,32,0.1);
+    transform: translate(-2px, -2px);
+    box-shadow: 4px 4px 0 var(--red-dim);
+  }
+
+  .scroll-hint {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    opacity: 0.4;
+    animation: fadeUp 1s 0.6s ease both;
+  }
+
+  .scroll-hint span {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+
+  .scroll-line {
+    width: 1px;
+    height: 40px;
+    background: var(--cream);
+    animation: scrollLine 1.5s ease-in-out infinite;
+  }
+
+  @keyframes scrollLine {
+    0% { transform: scaleY(0); transform-origin: top; }
+    50% { transform: scaleY(1); transform-origin: top; }
+    51% { transform: scaleY(1); transform-origin: bottom; }
+    100% { transform: scaleY(0); transform-origin: bottom; }
+  }
+
+  /* DIVIDER */
+  .divider {
+    height: 2px;
+    background: linear-gradient(to right, transparent, var(--red), transparent);
+    opacity: 0.4;
+    margin: 0 48px;
+  }
+
+  /* SECTIONS COMMON */
+  section {
+    padding: 100px 48px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 600;
+    font-size: 0.75rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .section-label::before {
+    content: '';
+    display: block;
+    width: 30px;
+    height: 1px;
+    background: var(--red);
+  }
+
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2.8rem, 6vw, 5rem);
+    letter-spacing: 0.03em;
+    line-height: 0.9;
+    color: var(--cream);
+    margin-bottom: 48px;
+  }
+
+  /* WHAT WE DO */
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 2px;
+    margin-top: 16px;
+  }
+
+  .service-card {
+    background: var(--bg2);
+    border: 1px solid rgba(232,68,32,0.15);
+    padding: 36px 32px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.2s, background 0.2s;
+  }
+
+  .service-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 3px;
+    height: 0;
+    background: var(--red);
+    transition: height 0.3s ease;
+  }
+
+  .service-card:hover::before { height: 100%; }
+  .service-card:hover { border-color: rgba(232,68,32,0.4); background: rgba(35,13,8,0.8); }
+
+  .service-icon {
+    font-size: 1.8rem;
+    margin-bottom: 16px;
+    display: block;
+  }
+
+  .service-number {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 0.85rem;
+    letter-spacing: 0.15em;
+    color: var(--red);
+    opacity: 0.5;
+    margin-bottom: 10px;
+  }
+
+  .service-name {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 1.3rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--cream);
+    margin-bottom: 12px;
+  }
+
+  .service-desc {
+    font-size: 0.9rem;
+    line-height: 1.65;
+    color: rgba(240,232,216,0.55);
+  }
+
+  /* SHOWS */
+  .shows-list {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .show-card {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    background: var(--bg2);
+    border: 1px solid rgba(232,68,32,0.12);
+    padding: 28px 36px;
+    gap: 24px;
+    transition: border-color 0.2s, background 0.2s;
+    cursor: pointer;
+  }
+
+  .show-card:hover {
+    border-color: rgba(232,68,32,0.5);
+    background: rgba(35,13,8,0.9);
+  }
+
+  .show-date-badge {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 0.8rem;
+    letter-spacing: 0.15em;
+    color: var(--red);
+    background: rgba(232,68,32,0.1);
+    border: 1px solid rgba(232,68,32,0.3);
+    padding: 4px 10px;
+    display: inline-block;
+    margin-bottom: 10px;
+  }
+
+  .show-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(1.8rem, 3.5vw, 2.4rem);
+    letter-spacing: 0.03em;
+    color: var(--cream);
+    line-height: 1;
+  }
+
+  .show-lineup {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 400;
+    font-size: 0.9rem;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+    margin-top: 6px;
+  }
+
+  .show-meta {
+    text-align: right;
+    flex-shrink: 0;
+  }
+
+  .show-venue {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 600;
+    font-size: 0.8rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+  }
+
+  .show-price {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.5rem;
+    letter-spacing: 0.08em;
+    color: var(--red);
+    display: block;
+    margin-bottom: 12px;
+  }
+
+  .btn-ticket {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 0.78rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--bg);
+    background: var(--red);
+    border: none;
+    padding: 10px 22px;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+
+  .btn-ticket:hover {
+    background: var(--red-bright);
+    transform: translate(-2px, -2px);
+    box-shadow: 3px 3px 0 var(--red-dim);
+  }
+
+  .show-tag-past {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 600;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    border: 1px solid var(--text-muted);
+    padding: 6px 14px;
+    opacity: 0.6;
+  }
+
+  /* ABOUT */
+  .about-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: start;
+  }
+
+  .about-text p {
+    font-size: 1rem;
+    line-height: 1.8;
+    color: rgba(240,232,216,0.7);
+    margin-bottom: 20px;
+  }
+
+  .about-text p strong {
+    color: var(--cream);
+    font-weight: 600;
+  }
+
+  .about-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+  }
+
+  .stat-box {
+    background: var(--bg2);
+    border: 1px solid rgba(232,68,32,0.12);
+    padding: 32px 28px;
+  }
+
+  .stat-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 3.5rem;
+    line-height: 1;
+    color: var(--red);
+    display: block;
+  }
+
+  .stat-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 600;
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(240,232,216,0.4);
+    margin-top: 6px;
+    display: block;
+  }
+
+  /* CONTACT */
+  .contact-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+  }
+
+  .contact-info p {
+    font-size: 0.95rem;
+    line-height: 1.75;
+    color: rgba(240,232,216,0.6);
+    margin-bottom: 32px;
+  }
+
+  .contact-links {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .contact-link {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 600;
+    font-size: 1rem;
+    letter-spacing: 0.06em;
+    color: var(--cream);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .contact-link:hover { color: var(--red); }
+
+  .contact-link-icon {
+    width: 40px; height: 40px;
+    background: rgba(232,68,32,0.1);
+    border: 1px solid rgba(232,68,32,0.25);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    flex-shrink: 0;
+    transition: background 0.2s;
+  }
+
+  .contact-link:hover .contact-link-icon {
+    background: rgba(232,68,32,0.2);
+  }
+
+  .contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .form-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 600;
+    font-size: 0.72rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  .form-input, .form-textarea {
+    background: var(--bg2);
+    border: 1px solid rgba(232,68,32,0.2);
+    color: var(--cream);
+    font-family: 'Barlow', sans-serif;
+    font-size: 0.95rem;
+    padding: 12px 16px;
+    outline: none;
+    transition: border-color 0.2s;
+    width: 100%;
+  }
+
+  .form-input:focus, .form-textarea:focus {
+    border-color: var(--red);
+  }
+
+  .form-textarea {
+    resize: vertical;
+    min-height: 110px;
+  }
+
+  .form-input::placeholder, .form-textarea::placeholder {
+    color: rgba(240,232,216,0.2);
+  }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid rgba(232,68,32,0.15);
+    padding: 40px 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .footer-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.4rem;
+    letter-spacing: 0.12em;
+    color: var(--red);
+  }
+
+  .footer-copy {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+    color: rgba(240,232,216,0.25);
+  }
+
+  /* MODAL */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(10,4,2,0.92);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+  }
+
+  .modal-overlay.active {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  .modal {
+    background: var(--bg2);
+    border: 1px solid rgba(232,68,32,0.35);
+    max-width: 560px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    transform: translateY(20px);
+    transition: transform 0.3s;
+  }
+
+  .modal-overlay.active .modal {
+    transform: translateY(0);
+  }
+
+  .modal-header {
+    padding: 28px 32px 20px;
+    border-bottom: 1px solid rgba(232,68,32,0.15);
+    position: relative;
+  }
+
+  .modal-close {
+    position: absolute;
+    top: 24px; right: 28px;
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    font-size: 1.4rem;
+    cursor: pointer;
+    transition: color 0.2s;
+    line-height: 1;
+  }
+
+  .modal-close:hover { color: var(--red); }
+
+  .modal-show-badge {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 600;
+    font-size: 0.72rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 8px;
+    display: block;
+  }
+
+  .modal-show-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem;
+    letter-spacing: 0.03em;
+    color: var(--cream);
+    line-height: 1;
+  }
+
+  .modal-show-info {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.88rem;
+    letter-spacing: 0.06em;
+    color: var(--text-muted);
+    margin-top: 6px;
+  }
+
+  .modal-body {
+    padding: 28px 32px 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .ticket-select-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+  }
+
+  .ticket-type-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    letter-spacing: 0.06em;
+    color: var(--cream);
+  }
+
+  .ticket-type-sub {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    display: block;
+    margin-top: 2px;
+  }
+
+  .qty-control {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    border: 1px solid rgba(232,68,32,0.25);
+  }
+
+  .qty-btn {
+    width: 36px; height: 36px;
+    background: rgba(232,68,32,0.08);
+    border: none;
+    color: var(--cream);
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: background 0.15s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .qty-btn:hover { background: rgba(232,68,32,0.2); }
+
+  .qty-value {
+    width: 44px;
+    text-align: center;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.2rem;
+    color: var(--cream);
+    background: transparent;
+    border: none;
+    border-left: 1px solid rgba(232,68,32,0.2);
+    border-right: 1px solid rgba(232,68,32,0.2);
+    outline: none;
+  }
+
+  .modal-divider {
+    height: 1px;
+    background: rgba(232,68,32,0.12);
+  }
+
+  .payment-section-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 600;
+    font-size: 0.72rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 12px;
+  }
+
+  .payment-methods {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+  }
+
+  .pay-method {
+    border: 1px solid rgba(232,68,32,0.2);
+    background: transparent;
+    padding: 14px 10px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.15s;
+    color: var(--cream);
+  }
+
+  .pay-method.selected {
+    border-color: var(--red);
+    background: rgba(232,68,32,0.1);
+  }
+
+  .pay-method:hover { border-color: rgba(232,68,32,0.5); }
+
+  .pay-method-icon { font-size: 1.4rem; }
+
+  .pay-method-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 600;
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: inherit;
+  }
+
+  .card-fields {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 4px;
+  }
+
+  .card-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .total-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 0;
+    border-top: 1px solid rgba(232,68,32,0.2);
+  }
+
+  .total-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 0.85rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(240,232,216,0.6);
+  }
+
+  .total-amount {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem;
+    letter-spacing: 0.06em;
+    color: var(--red);
+  }
+
+  .btn-pay {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 0.95rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--bg);
+    background: var(--red);
+    border: none;
+    padding: 18px;
+    cursor: pointer;
+    width: 100%;
+    transition: all 0.2s;
+  }
+
+  .btn-pay:hover {
+    background: var(--red-bright);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 24px rgba(232,68,32,0.3);
+  }
+
+  .wallet-pay-btn {
+    width: 100%;
+    padding: 16px;
+    border: 1px solid rgba(232,68,32,0.3);
+    background: var(--bg2);
+    color: var(--cream);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 700;
+    font-size: 0.95rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .wallet-pay-btn:hover {
+    border-color: var(--red);
+    background: rgba(232,68,32,0.08);
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* MARQUEE */
+  .marquee-wrap {
+    overflow: hidden;
+    background: var(--red);
+    padding: 12px 0;
+    white-space: nowrap;
+  }
+
+  .marquee-track {
+    display: inline-flex;
+    animation: marquee 18s linear infinite;
+  }
+
+  .marquee-item {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1rem;
+    letter-spacing: 0.2em;
+    color: var(--bg);
+    padding: 0 32px;
+  }
+
+  .marquee-sep {
+    color: rgba(26,10,6,0.4);
+    padding: 0 8px;
+  }
+
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* SCROLLBAR */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--red-dim); }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    nav { padding: 16px 24px; }
+    .nav-links { display: none; }
+    section { padding: 72px 24px; }
+    .hero { padding: 100px 24px 80px; }
+    .about-layout, .contact-layout { grid-template-columns: 1fr; gap: 48px; }
+    .show-card { grid-template-columns: 1fr; }
+    .show-meta { text-align: left; }
+    footer { flex-direction: column; gap: 12px; text-align: center; }
+    .payment-methods { grid-template-columns: repeat(3,1fr); }
+    .divider { margin: 0 24px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">The Title Later</a>
+  <ul class="nav-links">
+    <li><a href="#services">Услуги</a></li>
+    <li><a href="#shows">Концерты</a></li>
+    <li><a href="#about">О нас</a></li>
+    <li><a href="#contact">Контакт</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" style="max-width:100%; padding-left:0; padding-right:0;">
+  <div class="hero-bg-lines"></div>
+  <p class="hero-eyebrow">DIY Production Agency — Кишинёв</p>
+  <h1 class="hero-title">
+    THE TITLE<br>
+    <span>LATER</span>
+  </h1>
+  <p class="hero-subtitle">
+    Мы организуем концерты под ключ — от букинга до билетов. Для групп, которые хотят играть, а не заниматься логистикой.
+  </p>
+  <div class="hero-cta">
+    <a href="#shows" class="btn-primary">Ближайшие концерты</a>
+    <a href="#contact" class="btn-secondary">Работать с нами</a>
+  </div>
+  <div class="scroll-hint">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <span class="marquee-item">BOOKING</span><span class="marquee-sep">✦</span>
+    <span class="marquee-item">PRODUCTION</span><span class="marquee-sep">✦</span>
+    <span class="marquee-item">PROMOTION</span><span class="marquee-sep">✦</span>
+    <span class="marquee-item">SOUND & LIGHT</span><span class="marquee-sep">✦</span>
+    <span class="marquee-item">MERCHANDISE</span><span class="marquee-sep">✦</span>
+    <span class="marquee-item">TICKETING</span><span class="marquee-sep">✦</span>
+    <span class="marquee-item">ВИЗОВАЯ ПОДДЕРЖКА</span><span class="marquee-sep">✦</span>
+    <span class="marquee-item">РАЙДЕР</span><span class="marquee-sep">✦</span>
+    <!-- Duplicate for seamless loop -->
+    <span class="marquee-item">BOOKING</span><span class="marquee-sep">✦</span>
+    <span class="marquee-item">PRODUCTION</span><span class="marquee-sep">✦</span>
+    <span class="marquee-item">PROMOTION</span><span class="marquee-sep">✦</span>
+    <span class="marquee-item">SOUND & LIGHT</span><span class="marquee-sep">✦</span>
+    <span class="marquee-item">MERCHANDISE</span><span class="marquee-sep">✦</span>
+    <span class="marquee-item">TICKETING</span><span class="marquee-sep">✦</span>
+    <span class="marquee-item">ВИЗОВАЯ ПОДДЕРЖКА</span><span class="marquee-sep">✦</span>
+    <span class="marquee-item">РАЙДЕР</span><span class="marquee-sep">✦</span>
+  </div>
+</div>
+
+<div class="divider" style="margin-top:0;"></div>
+
+<!-- SERVICES -->
+<section id="services">
+  <p class="section-label reveal">Что мы делаем</p>
+  <h2 class="section-title reveal">Полный<br>цикл.</h2>
+  <div class="services-grid">
+    <div class="service-card reveal">
+      <span class="service-number">01</span>
+      <p class="service-name">Букинг & Переговоры</p>
+      <p class="service-desc">Находим площадки, договариваемся о датах и условиях, берём на себя все переговоры с клубами и промоутерами.</p>
+    </div>
+    <div class="service-card reveal">
+      <span class="service-number">02</span>
+      <p class="service-name">Звук & Свет</p>
+      <p class="service-desc">Технический райдер, setup звука и сцены, работа со световыми инженерами. Группа приезжает — всё уже готово.</p>
+    </div>
+    <div class="service-card reveal">
+      <span class="service-number">03</span>
+      <p class="service-name">Промо & Афиши</p>
+      <p class="service-desc">Дизайн флаеров и постеров, таргетированная реклама в соцсетях, координация с локальными медиа и музыкальными блогерами.</p>
+    </div>
+    <div class="service-card reveal">
+      <span class="service-number">04</span>
+      <p class="service-name">Продажа билетов</p>
+      <p class="service-desc">Онлайн-тикетинг, касса на входе, работа с партнёрскими точками продаж по городу.</p>
+    </div>
+    <div class="service-card reveal">
+      <span class="service-number">05</span>
+      <p class="service-name">Мерч & Бэклайн</p>
+      <p class="service-desc">Организация продажи мерча на концерте, аренда или предоставление бэклайна — барабаны, усилители, DI.</p>
+    </div>
+    <div class="service-card reveal">
+      <span class="service-number">06</span>
+      <p class="service-name">Логистика</p>
+      <p class="service-desc">Трансфер, заселение, визовая поддержка для иностранных артистов. Всё, что нужно до и после концерта.</p>
+    </div>
+    <div class="service-card reveal">
+      <span class="service-number">07</span>
+      <p class="service-name">Фото & Видео</p>
+      <p class="service-desc">Профессиональные фотографы и видеооператоры на каждом шоу. Контент для пресс-кита и соцсетей.</p>
+    </div>
+    <div class="service-card reveal">
+      <span class="service-number">08</span>
+      <p class="service-name">Гастроли под ключ</p>
+      <p class="service-desc">Планирование и организация туров по Молдове и региону — от одного города до 10 дат.</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- SHOWS -->
+<section id="shows">
+  <p class="section-label reveal">Шоу</p>
+  <h2 class="section-title reveal">Концерты</h2>
+  <div class="shows-list">
+
+    <!-- PAST: UNEMPLOYMENT -->
+    <div class="show-card reveal">
+      <div>
+        <span class="show-date-badge">21 ФЕВРАЛЯ 2025</span>
+        <h3 class="show-title">UNEMPLOYMENT</h3>
+        <p class="show-lineup">VESPA · POLAROIDS OF HER · SHIVER HAZE · CAPS LOCK</p>
+      </div>
+      <div class="show-meta">
+        <p class="show-venue">Labrewtory, Muncești 77<br>Chișinău · 18+</p>
+        <span class="show-price">150 MDL</span>
+        <span class="show-tag-past">Прошло</span>
+      </div>
+    </div>
+
+    <!-- UPCOMING: SIGNAL LOST -->
+    <div class="show-card reveal" onclick="openModal('signal-lost')">
+      <div>
+        <span class="show-date-badge">12 АПРЕЛЯ 2025</span>
+        <h3 class="show-title">SIGNAL LOST</h3>
+        <p class="show-lineup">DEAD SUMMER · FAULTLINE · MIRROR STATIC · GHOST CITY</p>
+      </div>
+      <div class="show-meta">
+        <p class="show-venue">Labrewtory, Muncești 77<br>Chișinău · 18+</p>
+        <span class="show-price">180 MDL</span>
+        <button class="btn-ticket">Купить билет</button>
+      </div>
+    </div>
+
+    <!-- UPCOMING: STATIC NIGHTS -->
+    <div class="show-card reveal" onclick="openModal('static-nights')">
+      <div>
+        <span class="show-date-badge">7 МАЯ 2025</span>
+        <h3 class="show-title">STATIC NIGHTS VOL. 2</h3>
+        <p class="show-lineup">HOLLOW COAST · PAPER WOLVES · RUIN THE ENDING · LAST LIGHT</p>
+      </div>
+      <div class="show-meta">
+        <p class="show-venue">Garagе Club, Chișinău<br>18+</p>
+        <span class="show-price">200 MDL</span>
+        <button class="btn-ticket">Купить билет</button>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-layout">
+    <div>
+      <p class="section-label reveal">О нас</p>
+      <h2 class="section-title reveal">Мы — как вы,<br>только с<br>клипбордом.</h2>
+      <div class="about-text reveal">
+        <p>
+          <strong>The Title Later</strong> — это DIY production agency из Кишинёва. Мы сами музыканты и фанаты, поэтому знаем, как должен выглядеть хороший концерт изнутри.
+        </p>
+        <p>
+          Мы верим, что независимые группы заслуживают профессионального шоу — без компромиссов и переплат. Поэтому берём на себя всё: от переговоров с площадкой до продажи последнего билета.
+        </p>
+        <p>
+          Если у вас есть музыка — <strong>у нас есть остальное</strong>.
+        </p>
+        <a href="#contact" class="btn-primary" style="margin-top:8px; display:inline-block;">Поговорить с нами</a>
+      </div>
+    </div>
+    <div class="about-stats reveal">
+      <div class="stat-box">
+        <span class="stat-num">12+</span>
+        <span class="stat-label">Концертов организовано</span>
+      </div>
+      <div class="stat-box">
+        <span class="stat-num">30+</span>
+        <span class="stat-label">Артистов и групп</span>
+      </div>
+      <div class="stat-box">
+        <span class="stat-num">4</span>
+        <span class="stat-label">Площадки-партнёры</span>
+      </div>
+      <div class="stat-box">
+        <span class="stat-num">DIY</span>
+        <span class="stat-label">С 2023 года</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-layout">
+    <div>
+      <p class="section-label reveal">Контакт</p>
+      <h2 class="section-title reveal">Давай<br>работать.</h2>
+      <p class="contact-info reveal" style="font-size:0.95rem; line-height:1.75; color:rgba(240,232,216,0.6);">
+        Хотите организовать концерт, найти поддержку в туре или просто поговорить об идее? Мы отвечаем быстро.
+      </p>
+      <div class="contact-links reveal">
+        <a href="https://www.instagram.com/the_title_later/" target="_blank" class="contact-link">
+          <span class="contact-link-icon">📸</span>
+          @the_title_later
+        </a>
+        <a href="mailto:thetitlelater@gmail.com" class="contact-link">
+          <span class="contact-link-icon">✉️</span>
+          thetitlelater@gmail.com
+        </a>
+        <a href="tel:+37369000000" class="contact-link">
+          <span class="contact-link-icon">📞</span>
+          +373 69 000 000
+        </a>
+        <a href="https://t.me/thetitlelater" target="_blank" class="contact-link">
+          <span class="contact-link-icon">💬</span>
+          Telegram: @thetitlelater
+        </a>
+      </div>
+    </div>
+    <div class="reveal">
+      <div class="contact-form">
+        <div class="form-group">
+          <label class="form-label">Имя / Группа</label>
+          <input class="form-input" type="text" placeholder="Ваше имя или название группы">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email или Telegram</label>
+          <input class="form-input" type="text" placeholder="@username или email@domain.com">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Что нужно?</label>
+          <textarea class="form-textarea" placeholder="Расскажите о вашем шоу, туре или проекте..."></textarea>
+        </div>
+        <button class="btn-primary" style="width:100%; border:none; font-size:0.9rem; padding:16px;" onclick="handleFormSubmit(this)">
+          Отправить
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span class="footer-logo">The Title Later</span>
+  <span class="footer-copy">© 2025 The Title Later. Кишинёв, Молдова.</span>
+</footer>
+
+<!-- TICKET MODAL -->
+<div class="modal-overlay" id="ticketModal">
+  <div class="modal">
+    <div class="modal-header">
+      <button class="modal-close" onclick="closeModal()">✕</button>
+      <span class="modal-show-badge" id="modalBadge">Концерт</span>
+      <h3 class="modal-show-title" id="modalTitle">SIGNAL LOST</h3>
+      <p class="modal-show-info" id="modalInfo"></p>
+    </div>
+    <div class="modal-body">
+
+      <!-- Ticket quantity -->
+      <div>
+        <p class="payment-section-label">Количество билетов</p>
+        <div class="ticket-select-row">
+          <div>
+            <span class="ticket-type-label">Стандартный вход</span>
+            <span class="ticket-type-sub" id="ticketPriceSub">180 MDL / шт.</span>
+          </div>
+          <div class="qty-control">
+            <button class="qty-btn" onclick="changeQty(-1)">−</button>
+            <input class="qty-value" id="qtyValue" type="text" value="1" readonly>
+            <button class="qty-btn" onclick="changeQty(1)">+</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-divider"></div>
+
+      <!-- Payment method -->
+      <div>
+        <p class="payment-section-label">Способ оплаты</p>
+        <div class="payment-methods">
+          <button class="pay-method selected" id="pm-card" onclick="selectPayment('card')">
+            <span class="pay-method-icon">💳</span>
+            <span class="pay-method-label">Карта</span>
+          </button>
+          <button class="pay-method" id="pm-apple" onclick="selectPayment('apple')">
+            <span class="pay-method-icon"> </span>
+            <span class="pay-method-label">Apple Pay</span>
+          </button>
+          <button class="pay-method" id="pm-google" onclick="selectPayment('google')">
+            <span class="pay-method-icon">G</span>
+            <span class="pay-method-label">Google Pay</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Card fields -->
+      <div class="card-fields" id="cardFields">
+        <div class="form-group">
+          <label class="form-label">Номер карты</label>
+          <input class="form-input" type="text" placeholder="0000 0000 0000 0000" maxlength="19" oninput="formatCard(this)">
+        </div>
+        <div class="card-row">
+          <div class="form-group">
+            <label class="form-label">Срок</label>
+            <input class="form-input" type="text" placeholder="MM/YY" maxlength="5">
+          </div>
+          <div class="form-group">
+            <label class="form-label">CVV</label>
+            <input class="form-input" type="text" placeholder="•••" maxlength="3">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Имя на карте</label>
+          <input class="form-input" type="text" placeholder="IVAN PETROV">
+        </div>
+      </div>
+
+      <!-- Wallet pay stub -->
+      <div id="walletFields" style="display:none;">
+        <button class="wallet-pay-btn" onclick="walletStub()">
+          <span id="walletIcon">🍎</span>
+          <span id="walletLabel">Оплатить через Apple Pay</span>
+        </button>
+        <p style="text-align:center; font-size:0.78rem; color:var(--text-muted); margin-top:10px; font-family:'Barlow Condensed',sans-serif; letter-spacing:0.06em;">
+          Демо-режим. Реальная интеграция подключается при запуске.
+        </p>
+      </div>
+
+      <div class="modal-divider"></div>
+
+      <!-- Total -->
+      <div class="total-row">
+        <span class="total-label">Итого</span>
+        <span class="total-amount" id="totalAmount">180 MDL</span>
+      </div>
+
+      <button class="btn-pay" onclick="handlePay()">Оплатить билет →</button>
+
+    </div>
+  </div>
+</div>
+
+<script>
+  // ---- SHOWS DATA ----
+  const shows = {
+    'signal-lost': {
+      title: 'SIGNAL LOST',
+      badge: '12 АПРЕЛЯ 2025',
+      info: 'Labrewtory · Muncești 77, Chișinău · 18+ · Open Doors 17:00',
+      price: 180
+    },
+    'static-nights': {
+      title: 'STATIC NIGHTS VOL. 2',
+      badge: '7 МАЯ 2025',
+      info: 'Garage Club, Chișinău · 18+ · Open Doors 18:00',
+      price: 200
+    }
+  };
+
+  let currentShow = null;
+  let qty = 1;
+  let payMethod = 'card';
+
+  function openModal(id) {
+    currentShow = shows[id];
+    qty = 1;
+    payMethod = 'card';
+
+    document.getElementById('modalBadge').textContent = currentShow.badge;
+    document.getElementById('modalTitle').textContent = currentShow.title;
+    document.getElementById('modalInfo').textContent = currentShow.info;
+    document.getElementById('ticketPriceSub').textContent = currentShow.price + ' MDL / шт.';
+    document.getElementById('qtyValue').value = 1;
+    updateTotal();
+    selectPayment('card');
+
+    document.getElementById('ticketModal').classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal() {
+    document.getElementById('ticketModal').classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  document.getElementById('ticketModal').addEventListener('click', function(e) {
+    if (e.target === this) closeModal();
+  });
+
+  function changeQty(delta) {
+    qty = Math.max(1, Math.min(10, qty + delta));
+    document.getElementById('qtyValue').value = qty;
+    updateTotal();
+  }
+
+  function updateTotal() {
+    if (!currentShow) return;
+    document.getElementById('totalAmount').textContent = (currentShow.price * qty) + ' MDL';
+  }
+
+  function selectPayment(method) {
+    payMethod = method;
+    ['card','apple','google'].forEach(m => {
+      document.getElementById('pm-' + m).classList.remove('selected');
+    });
+    document.getElementById('pm-' + method).classList.add('selected');
+
+    const cardF = document.getElementById('cardFields');
+    const walletF = document.getElementById('walletFields');
+
+    if (method === 'card') {
+      cardF.style.display = 'flex';
+      walletF.style.display = 'none';
+    } else {
+      cardF.style.display = 'none';
+      walletF.style.display = 'block';
+      document.getElementById('walletIcon').textContent = method === 'apple' ? '🍎' : 'G';
+      document.getElementById('walletLabel').textContent = method === 'apple' 
+        ? 'Оплатить через Apple Pay' 
+        : 'Оплатить через Google Pay';
+    }
+  }
+
+  function formatCard(input) {
+    let v = input.value.replace(/\D/g, '').substring(0, 16);
+    input.value = v.replace(/(.{4})/g, '$1 ').trim();
+  }
+
+  function walletStub() {
+    const name = payMethod === 'apple' ? 'Apple Pay' : 'Google Pay';
+    alert(`${name}: демо-режим.\n\nВ реальном проекте здесь откроется нативный платёжный интерфейс.\nИнтеграция подключается при запуске.`);
+  }
+
+  function handlePay() {
+    if (payMethod === 'card') {
+      const inputs = document.querySelectorAll('#cardFields input');
+      for (let i of inputs) {
+        if (!i.value.trim()) {
+          i.style.borderColor = 'var(--red)';
+          i.focus();
+          return;
+        }
+        i.style.borderColor = '';
+      }
+    }
+    const total = currentShow.price * qty;
+    closeModal();
+    setTimeout(() => {
+      alert(`✓ Оплата прошла успешно!\n\n${currentShow.title}\n${qty} × ${currentShow.price} MDL = ${total} MDL\n\nБилет отправлен на вашу почту.`);
+    }, 200);
+  }
+
+  function handleFormSubmit(btn) {
+    const inputs = btn.closest('.contact-form').querySelectorAll('input, textarea');
+    let valid = true;
+    for (let i of inputs) {
+      if (!i.value.trim()) {
+        i.style.borderColor = 'var(--red)';
+        if (valid) { i.focus(); valid = false; }
+      } else {
+        i.style.borderColor = '';
+      }
+    }
+    if (valid) {
+      btn.textContent = '✓ Отправлено!';
+      btn.style.background = '#2a6e2a';
+      setTimeout(() => {
+        btn.textContent = 'Отправить';
+        btn.style.background = '';
+      }, 3000);
+    }
+  }
+
+  // ---- SCROLL REVEAL ----
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
