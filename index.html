@@ -1100,22 +1100,22 @@
       </div>
     </div>
 
-    <!-- UPCOMING: SIGNAL LOST -->
+    <!-- UPCOMING: UNDERGROUNDICA -->
     <div class="show-card reveal" onclick="openModal('signal-lost')">
       <div>
         <span class="show-date-badge">12 АПРЕЛЯ 2025</span>
-        <h3 class="show-title">SIGNAL LOST</h3>
-        <p class="show-lineup">DEAD SUMMER · FAULTLINE · MIRROR STATIC · GHOST CITY</p>
+        <h3 class="show-title">UNDERGROUNDICA</h3>
+        <p class="show-lineup">SHIVER HAZE · WALK ALONE · BLANKET HILL</p>
       </div>
       <div class="show-meta">
         <p class="show-venue">Labrewtory, Muncești 77<br>Chișinău · 18+</p>
-        <span class="show-price">180 MDL</span>
+        <span class="show-price">200 MDL</span>
         <button class="btn-ticket">Купить билет</button>
       </div>
     </div>
 
     <!-- UPCOMING: STATIC NIGHTS -->
-    <div class="show-card reveal" onclick="openModal('static-nights')">
+    <!-- <div class="show-card reveal" onclick="openModal('static-nights')">
       <div>
         <span class="show-date-badge">7 МАЯ 2025</span>
         <h3 class="show-title">STATIC NIGHTS VOL. 2</h3>
@@ -1126,7 +1126,7 @@
         <span class="show-price">200 MDL</span>
         <button class="btn-ticket">Купить билет</button>
       </div>
-    </div>
+    </div> -->
 
   </div>
 </section>
@@ -1237,7 +1237,7 @@
     <div class="modal-header">
       <button class="modal-close" onclick="closeModal()">✕</button>
       <span class="modal-show-badge" id="modalBadge">Концерт</span>
-      <h3 class="modal-show-title" id="modalTitle">SIGNAL LOST</h3>
+      <h3 class="modal-show-title" id="modalTitle">UNDERGROUNDICA</h3>
       <p class="modal-show-info" id="modalInfo"></p>
     </div>
     <div class="modal-body">
@@ -1330,17 +1330,17 @@
   // ---- SHOWS DATA ----
   const shows = {
     'signal-lost': {
-      title: 'SIGNAL LOST',
+      title: 'UNDERGROUNDICA',
       badge: '12 АПРЕЛЯ 2025',
       info: 'Labrewtory · Muncești 77, Chișinău · 18+ · Open Doors 17:00',
-      price: 180
-    },
-    'static-nights': {
-      title: 'STATIC NIGHTS VOL. 2',
-      badge: '7 МАЯ 2025',
-      info: 'Garage Club, Chișinău · 18+ · Open Doors 18:00',
       price: 200
-    }
+    },
+    // 'static-nights': {
+    //   title: 'STATIC NIGHTS VOL. 2',
+    //   badge: '7 МАЯ 2025',
+    //   info: 'Garage Club, Chișinău · 18+ · Open Doors 18:00',
+    //   price: 200
+    // }
   };
 
   let currentShow = null;
